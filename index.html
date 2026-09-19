@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151637" />
+    <meta name="description" content="夕夕我错了我们和好吧" />
+    <title>夕夕我错了我们和好吧</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23151637'/%3E%3Cpath d='M32 49C14 38 12 20 24 18c5-1 8 2 8 6 0-4 3-7 8-6 12 2 10 20-8 31Z' fill='%23d6c0ff'/%3E%3C/svg%3E" />
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      body {
+        min-height: 100vh; margin: 0; overflow: hidden;
+        color: #fbf8ff;
+        font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+        background: radial-gradient(circle at 50% 110%, #6157a3 0, #282653 35%, #151637 72%, #0a0b20 100%);
+      }
+      .sky { min-height: 100vh; display: grid; place-items: center; padding: 24px; position: relative; isolation: isolate; }
+      .sky::before, .sky::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1; }
+      .sky::before { opacity: .68; background-image: radial-gradient(circle, #fff7d1 0 1px, transparent 1.6px), radial-gradient(circle, #cfc7ff 0 1.2px, transparent 1.8px); background-size: 78px 78px, 115px 115px; background-position: 11px 20px, 42px 57px; }
+      .sky::after { background: linear-gradient(180deg, rgba(10,11,32,.3), transparent 50%, rgba(8,8,26,.32)); }
+      main { width: min(100%, 455px); text-align: center; position: relative; z-index: 1; }
+      .art-wrap { height: clamp(230px, 38vh, 350px); display: flex; justify-content: center; align-items: end; margin-bottom: -12px; animation: float 5s ease-in-out infinite; }
+      .art { display: block; max-width: min(92vw, 360px); max-height: 100%; filter: drop-shadow(0 14px 22px rgba(2,2,18,.42)); }
+      h1 { margin: 0; font-family: "KaiTi", "STKaiti", serif; font-size: clamp(2rem, 8vw, 2.9rem); line-height: 1.25; font-weight: 600; letter-spacing: .04em; text-shadow: 0 2px 14px rgba(177,155,255,.65); }
+      .ornament { display: flex; gap: 14px; align-items: center; justify-content: center; color: #d8c9ff; margin: 13px 0 20px; }
+      .ornament::before, .ornament::after { content: ""; height: 1px; width: 73px; background: linear-gradient(90deg, transparent, #bdaaff); }
+      .ornament::after { transform: scaleX(-1); }
+      .choice-zone { height: 140px; position: relative; margin: 0 auto; width: min(100%, 370px); }
+      button { font: inherit; border: 0; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, left .22s ease, top .22s ease; }
+      #yes { width: 218px; height: 58px; border-radius: 999px; color: #fff; font-size: 1.34rem; letter-spacing: .18em; background: linear-gradient(120deg, #a98bf0, #d5b4ff); box-shadow: 0 9px 25px rgba(163,123,244,.35), inset 0 1px rgba(255,255,255,.45); }
+      #yes:hover, #yes:focus-visible { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 30px rgba(194,152,255,.55); outline: none; }
+      #no { position: absolute; min-width: 120px; height: 43px; left: 50%; top: 74px; transform: translateX(-50%); color: #eee7ff; font-size: 1rem; border: 1.5px solid #bdaaff; border-radius: 999px; background: rgba(27,25,67,.72); backdrop-filter: blur(6px); }
+      .note { margin: 0; font-size: .9rem; color: #d4cdf0; letter-spacing: .04em; }
+      .toast { position: fixed; left: 50%; bottom: 34px; transform: translate(-50%, 130px); width: min(calc(100% - 40px), 360px); padding: 18px 20px; border: 1px solid rgba(230,220,255,.44); border-radius: 18px; background: rgba(41,36,89,.92); box-shadow: 0 16px 38px rgba(0,0,0,.3); color: #fff; font-size: 1rem; transition: transform .4s cubic-bezier(.2,.9,.25,1.25); }
+      .toast.show { transform: translate(-50%, 0); }
+      @keyframes float { 50% { transform: translateY(-9px); } }
+      @media (max-height: 670px) { .sky { padding: 13px 20px; } .art-wrap { height: 210px; } h1 { font-size: 1.9rem; } .ornament { margin: 8px 0 12px; } .choice-zone { height: 126px; } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+    </style>
+  </head>
+  <body>
+    <div class="sky">
+      <main aria-labelledby="title">
+        <div class="art-wrap"><img class="art" src="moon-puppy.png" alt="抱着爱心枕头、睡在月亮上的小狗" /></div>
+        <h1 id="title">夕夕我错了我们和好吧</h1>
+        <div class="ornament" aria-hidden="true">♥</div>
+        <div class="choice-zone" aria-label="请选择">
+          <button id="yes" type="button">同意</button>
+          <button id="no" type="button" aria-label="不同意">不同意</button>
+        </div>
+        <p class="note">做出选择后会通知儒儒</p>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite">收到你的同意啦，儒儒会知道的 ♥</div>
+    <script>
+      const noButton = document.getElementById('no');
+      const yesButton = document.getElementById('yes');
+      const toast = document.getElementById('toast');
+      const zone = document.querySelector('.choice-zone');
+      let moves = 0;
+      function dodge() {
+        const zoneRect = zone.getBoundingClientRect();
+        const buttonRect = noButton.getBoundingClientRect();
+        const maxX = zoneRect.width - buttonRect.width;
+        const maxY = zoneRect.height - buttonRect.height;
+        const x = Math.max(4, Math.random() * maxX - 2);
+        const y = Math.max(4, Math.random() * maxY - 2);
+        noButton.style.left = `${x}px`;
+        noButton.style.top = `${y}px`;
+        noButton.style.transform = 'none';
+        moves += 1;
+        if (moves > 5) noButton.textContent = '点不到呀';
+      }
+      noButton.addEventListener('pointerenter', dodge);
+      noButton.addEventListener('pointerdown', (event) => { event.preventDefault(); dodge(); });
+      noButton.addEventListener('focus', dodge);
+      yesButton.addEventListener('click', () => {
+        toast.classList.add('show');
+        yesButton.textContent = '好呀 ♥';
+        yesButton.disabled = true;
+        noButton.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>
